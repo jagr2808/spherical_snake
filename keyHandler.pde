@@ -5,8 +5,8 @@ void setup_keys(){
 }
 
 void keyhandling(){
-  if(keys.getOrDefault(UP, false)) move(movespeed);
-  if(keys.getOrDefault(DOWN, false)) move(-movespeed);
+  //if(keys.getOrDefault(UP, false)) move(movespeed);
+  //if(keys.getOrDefault(DOWN, false)) move(-movespeed);
   if (keys.getOrDefault(RIGHT, false)) turn(turnspeed);
   if (keys.getOrDefault(LEFT, false)) turn(-turnspeed);
   if (keys.getOrDefault(90, false)){ // z key
@@ -34,7 +34,6 @@ void keyhandling(){
 void keyPressed(){
   keys.put(keyCode, true);
   if(keyCode==ENTER){
-    count++;
     println(zoom);
   }
 }

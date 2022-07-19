@@ -1,8 +1,6 @@
 PVector head, forward, right, apple;
 
-int count = 15;
-
-ArrayList<PVector> dodec, icos, snake, apples;
+ArrayList<PVector> snake, apples;
 
 float zoom = 100;
 
@@ -35,136 +33,12 @@ void setup(){
   setup_triangles();
   
   restart();
-  
-  
-  float phi = 0.577350269;
-  float phi2 = 0.934172359;
-  float phi3 = 0.35682209;
-  dodec = new ArrayList<PVector>();
-  
-  dodec.add(new PVector(0, phi2, phi3));
-  dodec.add(new PVector(0, phi2, -phi3));
-  dodec.add(new PVector(phi, phi, -phi));
-  dodec.add(new PVector(phi2, phi3, 0));
-  dodec.add(new PVector(phi, phi, phi));
-  
-  dodec.add(new PVector(phi, -phi, phi));
-  dodec.add(new PVector(phi2, -phi3, 0));
-  dodec.add(new PVector(phi, -phi, -phi));
-  dodec.add(new PVector(0, -phi2, -phi3));
-  dodec.add(new PVector(0, -phi2, phi3));
-  
-  dodec.add(new PVector(-phi, phi, phi));
-  dodec.add(new PVector(-phi3, 0, phi2));
-  dodec.add(new PVector(-phi, -phi, phi));
-  dodec.add(new PVector(-phi2, -phi3, 0));
-  dodec.add(new PVector(-phi2, phi3, 0));
-  
-  
-  dodec.add(new PVector(-phi, phi, -phi));
-  dodec.add(new PVector(-phi, -phi, -phi));
-  
-  
-  dodec.add(new PVector(phi3, 0, phi2));
-  
-  
-  dodec.add(new PVector(phi3, 0, -phi2));
-  dodec.add(new PVector(-phi3, 0, -phi2));
-  
-  phi = 0.525731112;
-  phi2 = 0.850650808;
-  
-  icos = new ArrayList<PVector>();
-  icos.add(new PVector(0, phi, phi2));
-  icos.add(new PVector(0, -phi, phi2));
-  icos.add(new PVector(phi2, 0, phi));
-  
-  icos.add(new PVector(0, phi, -phi2));
-  icos.add(new PVector(0, -phi, -phi2));
-  icos.add(new PVector(phi2, 0, -phi));
-  
-  icos.add(new PVector(phi, phi2, 0));
-  icos.add(new PVector(-phi, phi2, 0));
-  icos.add(new PVector(0, phi, phi2));
-  
-  icos.add(new PVector(phi, -phi2, 0));
-  icos.add(new PVector(-phi, -phi2, 0));
-  icos.add(new PVector(0, -phi, phi2));
-  
-  icos.add(new PVector(-phi2, 0, phi));
-  icos.add(new PVector(-phi2, 0, -phi));
-  icos.add(new PVector(-phi, -phi2, 0));
-  
-  icos.add(new PVector(0, phi, phi2));
-  icos.add(new PVector(phi, phi2, 0));
-  icos.add(new PVector(phi2, 0, phi));
-  
-  icos.add(new PVector(0, phi, phi2));
-  icos.add(new PVector(0, -phi, phi2));
-  icos.add(new PVector(-phi2, 0, phi));
-  
-  icos.add(new PVector(0, -phi, phi2));
-  icos.add(new PVector(phi2, 0, phi));
-  icos.add(new PVector(phi, -phi2, 0));
 }
 
 void draw(){
   draw_background();
   move(movespeed);
   
-  
-  /*
-  PVector v2 = draw_point(dodec.get(count));
-  ellipse(v2.x, v2.y, 20, 20);
-  
-  beginShape();
-  int i = 0;
-  for (PVector p : dodec){
-    PVector v = draw_point(p);
-    if (i % 5 == 0 && i <15){
-      endShape(CLOSE);
-      beginShape();
-    }
-    if(i==15) endShape(CLOSE);
-    noStroke();
-    randomSeed(i);
-    fill(random(10,200),random(10,200),random(10,200));
-    if (v.z > 0) vertex(v.x, v.y);
-    i++;
-  }
-  endShape(CLOSE);
-  
-  for (PVector p : dodec){
-    PVector v = draw_point(p);
-    if (v.z > 0){
-      ellipse(v.x, v.y, 6, 6);
-    }
-  }*/
-  /*
-  beginShape();
-  int i = 0;
-  for (PVector p : icos){
-    PVector v = draw_point(p);
-    if (i % 3 == 0){
-      endShape(CLOSE);
-      beginShape();
-    }
-    noStroke();
-    randomSeed(i);
-    fill(i*10, i*5, i*2);//fill(random(10,200),random(10,200),random(10,200));
-    if (v.z > 0) vertex(v.x, v.y);
-    i++;
-  }
-  endShape(CLOSE);
-  
-  for (PVector p : icos){
-    PVector v = draw_point(p);
-    if (v.z > 0){
-      fill(255, 0, 0);
-      ellipse(v.x, v.y, 6, 6);
-    }
-  }
-  */
   noStroke();
   for(int i=0; i < triang.size(); i++){
     randomSeed(i);
@@ -208,7 +82,7 @@ void draw(){
     }
     pull(snake.get(i), snake.get(i-1), dist);
     v = draw_point(snake.get(i)); 
-    fill(0, 210-10*i, 0);
+    fill(0, max(210-10*i, 100+50*sin(i*PI/11)), 0);
     if (v.z > 0) ellipse(v.x, v.y, dist*zoom, dist*zoom);
   }
   
