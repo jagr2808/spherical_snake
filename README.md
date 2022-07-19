@@ -1,4 +1,4 @@
-# spherical_snake
+# Spherical Snake 
 The classical game of snake, but played on a sphere.
 
 You are a green snake that lives on a sphere, and wants to eat red fruit without crashing into yourself. You move at a constant speed and steer with the arrow keys.
