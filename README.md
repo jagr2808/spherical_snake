@@ -5,7 +5,8 @@ You are a green snake that lives on a sphere, and wants to eat red fruit without
 
 Use Z and X to zoom in and out, and use O, S and G to change between orthographic, stereographic and gnomonic projections respectively.
 
-<img width="599" alt="Screenshot 2022-07-19 at 13 44 28" src="https://user-images.githubusercontent.com/14027603/179742492-0f7e54ab-b69e-4f87-b7a2-f9eb8e0975ba.png">
-<img width="599" alt="Screenshot 2022-07-19 at 13 44 52" src="https://user-images.githubusercontent.com/14027603/179742504-79168b5e-463a-46ae-bef0-158f32ef07bf.png">
-<img width="599" alt="Screenshot 2022-07-19 at 13 45 15" src="https://user-images.githubusercontent.com/14027603/179742511-9327ccfa-10df-4ded-b8a4-0cd5b405ede8.png">
+<img width="598" alt="The game in orthographic mode" src="https://user-images.githubusercontent.com/14027603/179768425-8b0d3b1c-3be3-4479-bab0-bf7931be5490.png">
+<img width="598" alt="The game in stereographic mode" src="https://user-images.githubusercontent.com/14027603/179768429-bd11e530-5532-4a26-81c0-c679d8545dbd.png">
+<img width="598" alt="The game in gnomonic mode" src="https://user-images.githubusercontent.com/14027603/179768432-1054f408-6ef5-42ac-b117-0abe3b4f84ea.png">
+
 
