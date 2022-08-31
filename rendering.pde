@@ -42,15 +42,15 @@ PVector draw_point_gnomonic(PVector p){
   proj.add(p);
   proj.mult(1/p.dot(head));
   
-  int x = int(zoom * proj.dot(right) + width/2);
-  int y = int(zoom * proj.dot(forward) + height/2);
-  int z = 0;
-  
+  int z;
   if(p.dot(head) > 0){
     z = 1;
   }else{
     z = -1;
   }
+  
+  int x = int(zoom * proj.dot(right)*z + width/2);
+  int y = int(zoom * proj.dot(forward)*z + height/2);
   
   return new PVector(x, y, z);
 }

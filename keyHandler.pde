@@ -34,7 +34,7 @@ void keyhandling(){
 void keyPressed(){
   keys.put(keyCode, true);
   if(keyCode==ENTER){
-    println(zoom);
+    restart();
   }
 }
 
