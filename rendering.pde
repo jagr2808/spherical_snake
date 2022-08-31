@@ -14,8 +14,6 @@ void draw_background(){
   switch(projection) {
       case Ortho:
          background(0);
-         fill(255, 255, 255);
-         //ellipse(width/2, height/2, 2*zoom, 2*zoom);
          break;
       default:
          background(255);
@@ -37,6 +35,7 @@ PVector draw_point_orth(PVector p){
 }
 
 PVector draw_point_gnomonic(PVector p){
+  // proj = p/(p*head) - head
   PVector proj = head.copy();
   proj.mult(-p.dot(head));
   proj.add(p);
@@ -56,6 +55,7 @@ PVector draw_point_gnomonic(PVector p){
 }
 
 PVector draw_point_stereographic(PVector p){
+  // proj = 2(head + p)/(head*(head + p))
   PVector proj = head.copy();
   proj.add(p);
   proj.mult(2/proj.dot(head));
@@ -64,7 +64,7 @@ PVector draw_point_stereographic(PVector p){
   int y = int(zoom * proj.dot(forward) + height/2);
   int z = 0;
   
-  if(p.dot(head) > -0.91){
+  if(p.dot(head) > -0.99){
     z = 1;
   }else{
     z = -1;
@@ -74,6 +74,7 @@ PVector draw_point_stereographic(PVector p){
 }
 
 color spherePixel(PVector q){
+  // given point on sphere returns color
   int r,g,b;
   switch(texture){
     case Rainbow:
@@ -92,4 +93,9 @@ color spherePixel(PVector q){
       return color(r, g, b);
   }
   return 0;
+}
+
+color segmentColor(int i){
+  // returns color of the ith segment of the snake
+  return color(0, max(210-10*i, 100+50*sin(i*PI/11)), 0);
 }
