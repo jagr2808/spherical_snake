@@ -11,6 +11,13 @@ int score = 0;
 
 boolean GAMEOVER = false;
 
+PImage img;
+enum Texture {
+  Rainbow,
+  Earth
+}
+Texture texture = Texture.Earth;
+
 enum Projection {
   Stereo,
   Ortho,
@@ -34,6 +41,8 @@ void restart(){
 void setup(){
   size(600, 600);
   background(0);
+  img = loadImage("earth_small.png");
+  img.loadPixels();
   
   setup_keys();
   setup_triangles();
@@ -58,7 +67,7 @@ void draw(){
   for(int i=0; i < triang.size(); i++){
     randomSeed(i);
     PVector q = PVector.add(triang.get(i)[0], triang.get(i)[1]).add(triang.get(i)[2]).normalize();
-    fill(256*(0.5*q.x + 0.5),256*(0.5*q.y + 0.5),265*(0.5*q.z + 0.5));
+    fill(spherePixel(q));
     beginShape();
     for(PVector p : triang.get(i)){
       PVector v = draw_point(p);

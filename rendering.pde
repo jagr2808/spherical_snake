@@ -72,3 +72,24 @@ PVector draw_point_stereographic(PVector p){
   
   return new PVector(x, y, z);
 }
+
+color spherePixel(PVector q){
+  int r,g,b;
+  switch(texture){
+    case Rainbow:
+      r = int(256*(0.5*q.x + 0.5));
+      b = int(256*(0.5*q.y + 0.5));
+      g = int(265*(0.5*q.z + 0.5));
+      return color(r, g, b);
+    case Earth:
+      float angle = atan2(q.y, q.x);
+      int x = int((img.width -1)*(angle + PI) / (2*PI));
+      int y = int((img.height-1)*(q.z + 1)/2);
+      int loc = x + y*img.width;
+      r = int(red(img.pixels[loc]));
+      g = int(green(img.pixels[loc]));
+      b = int(blue(img.pixels[loc]));
+      return color(r, g, b);
+  }
+  return 0;
+}

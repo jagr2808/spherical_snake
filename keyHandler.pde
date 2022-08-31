@@ -29,9 +29,16 @@ void keyhandling(){
     projection = Projection.Gnomonic;
     zoom = 100;
   };
+  if (keys.getOrDefault(69, false)){// e key 
+    texture = Texture.Earth;
+  };
+  if (keys.getOrDefault(82, false)){// r key 
+    texture = Texture.Rainbow;
+  };
 }
 
 void keyPressed(){
+  println(keyCode);
   keys.put(keyCode, true);
   if(keyCode==ENTER){
     restart();

@@ -1,7 +1,7 @@
 ArrayList<PVector[]> tetrahedron;
 ArrayList<PVector[]> triang;
 ArrayList<PVector[]> icosahedron;
-int subdivisions = 3;
+int subdivisions = 4;
 
 void setup_triangles(){
   //create tetrahedron
