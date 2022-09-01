@@ -6,6 +6,10 @@ PVector draw_point(PVector p){
          return draw_point_orth(p);
       case Gnomonic:
         return draw_point_gnomonic(p);
+      case DynamicMercator:
+        return draw_point_mercator(p, head, right, forward);
+      case StaticMercator:
+        return draw_point_mercator(p, new PVector(1,0,0), new PVector(0,1,0), new PVector(0,0,1));
     }
     return null;
 }
@@ -73,6 +77,19 @@ PVector draw_point_stereographic(PVector p){
   return new PVector(x, y, z);
 }
 
+PVector draw_point_mercator(PVector p, PVector xref, PVector yref, PVector zref){
+  float xx = p.dot(xref);
+  float yy = p.dot(yref);
+  float zz = p.dot(zref);
+  float angle = atan2(yy, xx);
+  int x = int(zoom*angle);
+  int y = int(zoom*zz/(sqrt(1-zz*zz)));
+  return new PVector(
+  x + width/2, 
+  y + height/2, 
+  PI - abs(angle) < 0.1 || abs(zz) > 0.99 ? -1:1);
+}
+
 color spherePixel(PVector q){
   // given point on sphere returns color
   int r,g,b;
@@ -85,7 +102,7 @@ color spherePixel(PVector q){
     case Earth:
       float angle = atan2(q.y, q.x);
       int x = int((img.width -1)*(angle + PI) / (2*PI));
-      int y = int((img.height-1)*(q.z + 1)/2);
+      int y = constrain(int((img.height)*(q.z/(sqrt(1-q.z*q.z)*2) + 1)/2), 0, img.height-2);
       int loc = x + y*img.width;
       r = int(red(img.pixels[loc]));
       g = int(green(img.pixels[loc]));
@@ -95,7 +112,7 @@ color spherePixel(PVector q){
   return 0;
 }
 
-color segmentColor(int i){
+color segmentColor(float i){
   // returns color of the ith segment of the snake
   return color(0, max(210-10*i, 100+50*sin(i*PI/11)), 0);
 }

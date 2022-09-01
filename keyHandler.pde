@@ -15,19 +15,27 @@ void keyhandling(float dt){
   };
   if (keys.getOrDefault(88, false)){// x key - zoom out
     zoom /= 1.05;
-    zoom = max(60, zoom);
+    zoom = max(height/16, zoom);
   };
   if (keys.getOrDefault(83, false)){// s key - steroegraphic
     projection = Projection.Stereo;
-    zoom = 100;
+    zoom = height/10;
   };
   if (keys.getOrDefault(79, false)) {// o key - orthographic
     projection = Projection.Ortho;
-    zoom = 250;
+    zoom = 0.4*height;
   };
   if (keys.getOrDefault(71, false)){// g key - gnomonic
     projection = Projection.Gnomonic;
-    zoom = 100;
+    zoom = height/10;
+  };
+  if (keys.getOrDefault(77, false)){// m key - static mercator
+    projection = Projection.StaticMercator;
+    zoom = width/(2*PI);
+  };
+  if (keys.getOrDefault(78, false)){// n key - dynamic mercator
+    projection = Projection.DynamicMercator;
+    zoom = width/(2*PI);
   };
   if (keys.getOrDefault(69, false)){// e key - earth texture
     texture = Texture.Earth;
