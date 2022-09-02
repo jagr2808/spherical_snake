@@ -19,7 +19,7 @@ void keyhandling(float dt){
   };
   if (keys.getOrDefault(83, false)){// s key - steroegraphic
     projection = Projection.Stereo;
-    zoom = height/10;
+    zoom = height/7;
   };
   if (keys.getOrDefault(79, false)) {// o key - orthographic
     projection = Projection.Ortho;

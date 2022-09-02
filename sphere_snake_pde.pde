@@ -7,6 +7,10 @@ float zoom;
 float movespeed = 1.1;
 float turnspeed = 2*movespeed;
 int snakeresolution = 7;
+float colisiondist = 0.2; // collision distance
+float pulldist = colisiondist / snakeresolution; // distance between joints
+
+boolean shadow = true;
 
 int score = 0;
 
@@ -65,6 +69,11 @@ void draw(){
   float dt = float(newtime - oldtime) / 1000;
   oldtime = newtime;
   
+  render();
+  update(dt);
+}
+
+void render(){
   if(GAMEOVER){
     background(0);
     fill(255);
@@ -73,8 +82,6 @@ void draw(){
     "Your score was " + score + "\nPress Enter to play again"), width/2 - 160, height/2);
     return;
   }
-  
-  keyhandling(dt);
   
   draw_background();
   
@@ -91,46 +98,33 @@ void draw(){
     endShape();
   }
   
-  noFill();
-  strokeWeight(5*zoom);
-  stroke(255);
-  //circle(width/2, height/2, 20*zoom);
-  noStroke();
-  
-  float dist = 0.2; // collision distance
-  float pulldist = dist / snakeresolution; // distance between joints
   PVector v;
-  
+ 
   v = draw_point(apple); 
   if (v.z > 0) fill(250, 0, 0);
   else fill(250, 0, 0, 30); //apple is transparent when on the opposite side of sphere
-  ellipse(v.x, v.y, dist*zoom, dist*zoom);
+  ellipse(v.x, v.y, colisiondist*zoom, colisiondist*zoom);
   
   
   v = draw_point(snake.get(0)); 
   PVector w = draw_point(head);
   stroke(segmentColor(0));
-  strokeWeight(dist*zoom);
+  strokeWeight(colisiondist*zoom);
   if(abs(v.x-w.x) < 3*zoom) line(v.x, v.y, w.x, w.y);
   noStroke();
   fill(segmentColor(0));
-  ellipse(v.x, v.y, dist*zoom, dist*zoom);
+  circle(v.x, v.y, colisiondist*zoom);
   
-  for (int i = 1; i < snake.size(); i++){
-    if(i > snakeresolution && snake.get(i).dist(head) < dist*0.85){ 
-      GAMEOVER = true;
-      return;
-    }
-    if (!PAUSE) pull(snake.get(i), snake.get(i-1), pulldist);
+  for (int i = snake.size()-1; i > 0; i--){
     v = draw_point(snake.get(i)); 
     fill(segmentColor(float(i)/snakeresolution));
-    if (v.z > 0) {
+    if (true) {
       w = draw_point(snake.get(i-1));
-      stroke(segmentColor(float(i)/snakeresolution));
-      strokeWeight(dist*zoom);
+      stroke(segmentColor(float(i)/snakeresolution), v.z > 0 ? 255 : shadow ? 15 : 0);
+      strokeWeight(colisiondist*zoom*exp(-2.5*pow(float(i)/(snake.size()), 4)));
       if(abs(v.x-w.x) < 3*zoom) line(v.x, v.y, w.x, w.y);
       noStroke();
-      ellipse(v.x, v.y, dist*zoom, dist*zoom);
+      //circle(v.x, v.y, dist*zoom*exp(-i));
     }
   }
   
@@ -139,7 +133,7 @@ void draw(){
   w = draw_point(snake.get(0));
   pushMatrix();
   PImage resize_img = head_img.copy();
-  resize_img.resize(int(2.3*dist*zoom), int(2.3*dist*zoom));
+  resize_img.resize(int(2.3*colisiondist*zoom), int(2.3*colisiondist*zoom));
    
   translate(v.x, v.y);
   rotate(atan2(v.y-w.y, v.x-w.x) + PI/2);
@@ -150,7 +144,10 @@ void draw(){
   if(projection == Projection.Ortho) fill(255);
   else fill(15);
   text("Score: " + score, 10, 30);
-  
+}
+
+void update(float dt){
+  keyhandling(dt);
   if(PAUSE){
     //draw pause icon
     fill(255);
@@ -163,11 +160,19 @@ void draw(){
   
   move(movespeed*dt);
   
-  if(apple.dist(head) < dist*0.85){
+  if(apple.dist(head) < colisiondist*0.85){
     apple = PVector.random3D();
     for (int i = 0; i < snakeresolution; i++) snake.add(snake.get(snake.size()-1).copy());
     score += 10;
   }
   
-  pull(snake.get(0), head, dist);
+  
+  pull(snake.get(0), head, colisiondist);
+  for (int i = 1; i < snake.size(); i++){
+    if(i > snakeresolution && snake.get(i).dist(head) < colisiondist*0.85){ 
+      GAMEOVER = true;
+      return;
+    }
+    if (!PAUSE) pull(snake.get(i), snake.get(i-1), pulldist);
+  }
 }

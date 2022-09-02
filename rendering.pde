@@ -114,5 +114,5 @@ color spherePixel(PVector q){
 
 color segmentColor(float i){
   // returns color of the ith segment of the snake
-  return color(0, max(210-10*i, 100+50*sin(i*PI/11)), 0);
+  return color(0, 0.75*max(210-10*i*3, 100+50*sin(3*i*PI/11)), 30);
 }
